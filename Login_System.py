@@ -5,14 +5,18 @@ from tkinter import messagebox
 def login():
     email = email_input.get()
     password = password_input.get()
-    print(email, password)
-    file = open("details.txt", "a")
-    file.write("Email: " + email + "\n" + "Password: " + password + "\n" + "\n")
-    file.close()
-    if email == "" and password == "":
-        messagebox.showerror('login', 'Error')
+    if email == "":
+        messagebox.showerror('login', 'Login Error')
+    elif password == "":
+        messagebox.showerror('login', 'Login Error')
+    elif email == "" and password == "":
+        messagebox.showerror('login', 'Login Error')
     else:
+        file = open("details.txt", "a")
+        file.write("Email: " + email + "\n" + "Password: " + password + "\n" + "\n")
+        file.close()
         messagebox.showinfo('Login', 'Successful')
+        print(email, password)
 
     email_input.delete(0, 'end')
     password_input.delete(0, 'end')
@@ -54,6 +58,7 @@ checkbox.pack(pady=0, padx=(23, 60))
 
 button = customtkinter.CTkButton(master=frame2, width=170, text="Submit", corner_radius=12,
                                  font=("Baskerville Old Face", 20), command=login)
+root.bind('<Return>', lambda event=None: button.invoke())
 button.pack(pady=(12, 20), padx=20)
 
 root.mainloop()
